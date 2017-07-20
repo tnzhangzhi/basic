@@ -11,6 +11,8 @@
     <modules>
         <module>basic_spring</module>
         <module>basic_springmvc</module>
+        <module>services</module>
+        <module>basic_common</module>
     </modules>
 
 

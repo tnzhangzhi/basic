@@ -1,0 +1,780 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhz.dao.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.zhz.domain.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="certificate" property="certificate" jdbcType="VARCHAR" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="device_id" property="deviceId" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="realname" property="realname" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="BIT" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="image_id" property="imageId" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="signature" property="signature" jdbcType="VARCHAR" />
+    <result column="platform" property="platform" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="BIT" />
+    <result column="listen_time" property="listenTime" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="lastlogin" property="lastlogin" jdbcType="TIMESTAMP" />
+    <result column="logintimes" property="logintimes" jdbcType="INTEGER" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="regist_ip" property="registIp" jdbcType="VARCHAR" />
+    <result column="user_key" property="userKey" jdbcType="VARCHAR" />
+    <result column="refresh_feeds_at" property="refreshFeedsAt" jdbcType="TIMESTAMP" />
+    <result column="refresh_feeds_at_id" property="refreshFeedsAtId" jdbcType="BIGINT" />
+    <result column="is_subscribe_category" property="isSubscribeCategory" jdbcType="TINYINT" />
+    <result column="is_podcaster" property="isPodcaster" jdbcType="TINYINT" />
+    <result column="is_v" property="isV" jdbcType="TINYINT" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="tags" property="tags" jdbcType="VARCHAR" />
+    <result column="user_token" property="userToken" jdbcType="VARCHAR" />
+    <result column="user_state" property="userState" jdbcType="TINYINT" />
+    <result column="reg_type" property="regType" jdbcType="VARCHAR" />
+    <result column="token_exptime" property="tokenExptime" jdbcType="INTEGER" />
+    <result column="message_email" property="messageEmail" jdbcType="VARCHAR" />
+    <result column="image_path" property="imagePath" jdbcType="VARCHAR" />
+    <result column="fans_count" property="fansCount" jdbcType="INTEGER" />
+    <result column="real_fans_count" property="realFansCount" jdbcType="INTEGER" />
+    <result column="app_type" property="appType" jdbcType="INTEGER" />
+    <result column="is_robot" property="isRobot" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, certificate, openid, device_id, username, password, realname, sex, qq, mobile,
+    image_id, email, signature, platform, version, user_type, listen_time, status, lastlogin,
+    logintimes, created_at, updated_at, regist_ip, user_key, refresh_feeds_at, refresh_feeds_at_id,
+    is_subscribe_category, is_podcaster, is_v, description, tags, user_token, user_state,
+    reg_type, token_exptime, message_email, image_path, fans_count, real_fans_count,
+    app_type, is_robot
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zhz.domain.UserConditions" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from duotin_users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="paginationSql" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from duotin_users
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from duotin_users
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zhz.domain.UserConditions" >
+    delete from duotin_users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zhz.domain.User" useGeneratedKeys="true" keyProperty="id" >
+    insert into duotin_users (certificate, openid, device_id,
+      username, password, realname,
+      sex, qq, mobile, image_id,
+      email, signature, platform,
+      version, user_type, listen_time,
+      status, lastlogin, logintimes,
+      created_at, updated_at, regist_ip,
+      user_key, refresh_feeds_at, refresh_feeds_at_id,
+      is_subscribe_category, is_podcaster, is_v,
+      description, tags, user_token,
+      user_state, reg_type, token_exptime,
+      message_email, image_path, fans_count,
+      real_fans_count, app_type, is_robot
+      )
+    values (#{certificate,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{deviceId,jdbcType=INTEGER},
+      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR},
+      #{sex,jdbcType=BIT}, #{qq,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{imageId,jdbcType=INTEGER},
+      #{email,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR}, #{platform,jdbcType=VARCHAR},
+      #{version,jdbcType=VARCHAR}, #{userType,jdbcType=BIT}, #{listenTime,jdbcType=BIGINT},
+      #{status,jdbcType=BIT}, #{lastlogin,jdbcType=TIMESTAMP}, #{logintimes,jdbcType=INTEGER},
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{registIp,jdbcType=VARCHAR},
+      #{userKey,jdbcType=VARCHAR}, #{refreshFeedsAt,jdbcType=TIMESTAMP}, #{refreshFeedsAtId,jdbcType=BIGINT},
+      #{isSubscribeCategory,jdbcType=TINYINT}, #{isPodcaster,jdbcType=TINYINT}, #{isV,jdbcType=TINYINT},
+      #{description,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR}, #{userToken,jdbcType=VARCHAR},
+      #{userState,jdbcType=TINYINT}, #{regType,jdbcType=VARCHAR}, #{tokenExptime,jdbcType=INTEGER},
+      #{messageEmail,jdbcType=VARCHAR}, #{imagePath,jdbcType=VARCHAR}, #{fansCount,jdbcType=INTEGER},
+      #{realFansCount,jdbcType=INTEGER}, #{appType,jdbcType=INTEGER}, #{isRobot,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhz.domain.User" useGeneratedKeys="true" keyProperty="id" >
+    insert into duotin_users
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="certificate != null" >
+        certificate,
+      </if>
+      <if test="openid != null" >
+        openid,
+      </if>
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="realname != null" >
+        realname,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="imageId != null" >
+        image_id,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="signature != null" >
+        signature,
+      </if>
+      <if test="platform != null" >
+        platform,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="listenTime != null" >
+        listen_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="lastlogin != null" >
+        lastlogin,
+      </if>
+      <if test="logintimes != null" >
+        logintimes,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="registIp != null" >
+        regist_ip,
+      </if>
+      <if test="userKey != null" >
+        user_key,
+      </if>
+      <if test="refreshFeedsAt != null" >
+        refresh_feeds_at,
+      </if>
+      <if test="refreshFeedsAtId != null" >
+        refresh_feeds_at_id,
+      </if>
+      <if test="isSubscribeCategory != null" >
+        is_subscribe_category,
+      </if>
+      <if test="isPodcaster != null" >
+        is_podcaster,
+      </if>
+      <if test="isV != null" >
+        is_v,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="tags != null" >
+        tags,
+      </if>
+      <if test="userToken != null" >
+        user_token,
+      </if>
+      <if test="userState != null" >
+        user_state,
+      </if>
+      <if test="regType != null" >
+        reg_type,
+      </if>
+      <if test="tokenExptime != null" >
+        token_exptime,
+      </if>
+      <if test="messageEmail != null" >
+        message_email,
+      </if>
+      <if test="imagePath != null" >
+        image_path,
+      </if>
+      <if test="fansCount != null" >
+        fans_count,
+      </if>
+      <if test="realFansCount != null" >
+        real_fans_count,
+      </if>
+      <if test="appType != null" >
+        app_type,
+      </if>
+      <if test="isRobot != null" >
+        is_robot,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="certificate != null" >
+        #{certificate,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=BIT},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="imageId != null" >
+        #{imageId,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null" >
+        #{platform,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=BIT},
+      </if>
+      <if test="listenTime != null" >
+        #{listenTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="lastlogin != null" >
+        #{lastlogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logintimes != null" >
+        #{logintimes,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registIp != null" >
+        #{registIp,jdbcType=VARCHAR},
+      </if>
+      <if test="userKey != null" >
+        #{userKey,jdbcType=VARCHAR},
+      </if>
+      <if test="refreshFeedsAt != null" >
+        #{refreshFeedsAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refreshFeedsAtId != null" >
+        #{refreshFeedsAtId,jdbcType=BIGINT},
+      </if>
+      <if test="isSubscribeCategory != null" >
+        #{isSubscribeCategory,jdbcType=TINYINT},
+      </if>
+      <if test="isPodcaster != null" >
+        #{isPodcaster,jdbcType=TINYINT},
+      </if>
+      <if test="isV != null" >
+        #{isV,jdbcType=TINYINT},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null" >
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="userToken != null" >
+        #{userToken,jdbcType=VARCHAR},
+      </if>
+      <if test="userState != null" >
+        #{userState,jdbcType=TINYINT},
+      </if>
+      <if test="regType != null" >
+        #{regType,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenExptime != null" >
+        #{tokenExptime,jdbcType=INTEGER},
+      </if>
+      <if test="messageEmail != null" >
+        #{messageEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="imagePath != null" >
+        #{imagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fansCount != null" >
+        #{fansCount,jdbcType=INTEGER},
+      </if>
+      <if test="realFansCount != null" >
+        #{realFansCount,jdbcType=INTEGER},
+      </if>
+      <if test="appType != null" >
+        #{appType,jdbcType=INTEGER},
+      </if>
+      <if test="isRobot != null" >
+        #{isRobot,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zhz.domain.UserConditions" resultType="java.lang.Integer" >
+    select count(*) from duotin_users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update duotin_users
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.certificate != null" >
+        certificate = #{record.certificate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openid != null" >
+        openid = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceId != null" >
+        device_id = #{record.deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realname != null" >
+        realname = #{record.realname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=BIT},
+      </if>
+      <if test="record.qq != null" >
+        qq = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imageId != null" >
+        image_id = #{record.imageId,jdbcType=INTEGER},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signature != null" >
+        signature = #{record.signature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.platform != null" >
+        platform = #{record.platform,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null" >
+        version = #{record.version,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userType != null" >
+        user_type = #{record.userType,jdbcType=BIT},
+      </if>
+      <if test="record.listenTime != null" >
+        listen_time = #{record.listenTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=BIT},
+      </if>
+      <if test="record.lastlogin != null" >
+        lastlogin = #{record.lastlogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.logintimes != null" >
+        logintimes = #{record.logintimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdAt != null" >
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.registIp != null" >
+        regist_ip = #{record.registIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userKey != null" >
+        user_key = #{record.userKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refreshFeedsAt != null" >
+        refresh_feeds_at = #{record.refreshFeedsAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.refreshFeedsAtId != null" >
+        refresh_feeds_at_id = #{record.refreshFeedsAtId,jdbcType=BIGINT},
+      </if>
+      <if test="record.isSubscribeCategory != null" >
+        is_subscribe_category = #{record.isSubscribeCategory,jdbcType=TINYINT},
+      </if>
+      <if test="record.isPodcaster != null" >
+        is_podcaster = #{record.isPodcaster,jdbcType=TINYINT},
+      </if>
+      <if test="record.isV != null" >
+        is_v = #{record.isV,jdbcType=TINYINT},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tags != null" >
+        tags = #{record.tags,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userToken != null" >
+        user_token = #{record.userToken,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userState != null" >
+        user_state = #{record.userState,jdbcType=TINYINT},
+      </if>
+      <if test="record.regType != null" >
+        reg_type = #{record.regType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tokenExptime != null" >
+        token_exptime = #{record.tokenExptime,jdbcType=INTEGER},
+      </if>
+      <if test="record.messageEmail != null" >
+        message_email = #{record.messageEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imagePath != null" >
+        image_path = #{record.imagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fansCount != null" >
+        fans_count = #{record.fansCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.realFansCount != null" >
+        real_fans_count = #{record.realFansCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.appType != null" >
+        app_type = #{record.appType,jdbcType=INTEGER},
+      </if>
+      <if test="record.isRobot != null" >
+        is_robot = #{record.isRobot,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update duotin_users
+    set id = #{record.id,jdbcType=INTEGER},
+      certificate = #{record.certificate,jdbcType=VARCHAR},
+      openid = #{record.openid,jdbcType=VARCHAR},
+      device_id = #{record.deviceId,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      realname = #{record.realname,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=BIT},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      image_id = #{record.imageId,jdbcType=INTEGER},
+      email = #{record.email,jdbcType=VARCHAR},
+      signature = #{record.signature,jdbcType=VARCHAR},
+      platform = #{record.platform,jdbcType=VARCHAR},
+      version = #{record.version,jdbcType=VARCHAR},
+      user_type = #{record.userType,jdbcType=BIT},
+      listen_time = #{record.listenTime,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=BIT},
+      lastlogin = #{record.lastlogin,jdbcType=TIMESTAMP},
+      logintimes = #{record.logintimes,jdbcType=INTEGER},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      regist_ip = #{record.registIp,jdbcType=VARCHAR},
+      user_key = #{record.userKey,jdbcType=VARCHAR},
+      refresh_feeds_at = #{record.refreshFeedsAt,jdbcType=TIMESTAMP},
+      refresh_feeds_at_id = #{record.refreshFeedsAtId,jdbcType=BIGINT},
+      is_subscribe_category = #{record.isSubscribeCategory,jdbcType=TINYINT},
+      is_podcaster = #{record.isPodcaster,jdbcType=TINYINT},
+      is_v = #{record.isV,jdbcType=TINYINT},
+      description = #{record.description,jdbcType=VARCHAR},
+      tags = #{record.tags,jdbcType=VARCHAR},
+      user_token = #{record.userToken,jdbcType=VARCHAR},
+      user_state = #{record.userState,jdbcType=TINYINT},
+      reg_type = #{record.regType,jdbcType=VARCHAR},
+      token_exptime = #{record.tokenExptime,jdbcType=INTEGER},
+      message_email = #{record.messageEmail,jdbcType=VARCHAR},
+      image_path = #{record.imagePath,jdbcType=VARCHAR},
+      fans_count = #{record.fansCount,jdbcType=INTEGER},
+      real_fans_count = #{record.realFansCount,jdbcType=INTEGER},
+      app_type = #{record.appType,jdbcType=INTEGER},
+      is_robot = #{record.isRobot,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhz.domain.User" >
+    update duotin_users
+    <set >
+      <if test="certificate != null" >
+        certificate = #{certificate,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=BIT},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="imageId != null" >
+        image_id = #{imageId,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null" >
+        platform = #{platform,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=BIT},
+      </if>
+      <if test="listenTime != null" >
+        listen_time = #{listenTime,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="lastlogin != null" >
+        lastlogin = #{lastlogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logintimes != null" >
+        logintimes = #{logintimes,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registIp != null" >
+        regist_ip = #{registIp,jdbcType=VARCHAR},
+      </if>
+      <if test="userKey != null" >
+        user_key = #{userKey,jdbcType=VARCHAR},
+      </if>
+      <if test="refreshFeedsAt != null" >
+        refresh_feeds_at = #{refreshFeedsAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refreshFeedsAtId != null" >
+        refresh_feeds_at_id = #{refreshFeedsAtId,jdbcType=BIGINT},
+      </if>
+      <if test="isSubscribeCategory != null" >
+        is_subscribe_category = #{isSubscribeCategory,jdbcType=TINYINT},
+      </if>
+      <if test="isPodcaster != null" >
+        is_podcaster = #{isPodcaster,jdbcType=TINYINT},
+      </if>
+      <if test="isV != null" >
+        is_v = #{isV,jdbcType=TINYINT},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null" >
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="userToken != null" >
+        user_token = #{userToken,jdbcType=VARCHAR},
+      </if>
+      <if test="userState != null" >
+        user_state = #{userState,jdbcType=TINYINT},
+      </if>
+      <if test="regType != null" >
+        reg_type = #{regType,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenExptime != null" >
+        token_exptime = #{tokenExptime,jdbcType=INTEGER},
+      </if>
+      <if test="messageEmail != null" >
+        message_email = #{messageEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="imagePath != null" >
+        image_path = #{imagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fansCount != null" >
+        fans_count = #{fansCount,jdbcType=INTEGER},
+      </if>
+      <if test="realFansCount != null" >
+        real_fans_count = #{realFansCount,jdbcType=INTEGER},
+      </if>
+      <if test="appType != null" >
+        app_type = #{appType,jdbcType=INTEGER},
+      </if>
+      <if test="isRobot != null" >
+        is_robot = #{isRobot,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhz.domain.User" >
+    update duotin_users
+    set certificate = #{certificate,jdbcType=VARCHAR},
+      openid = #{openid,jdbcType=VARCHAR},
+      device_id = #{deviceId,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=BIT},
+      qq = #{qq,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      image_id = #{imageId,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      signature = #{signature,jdbcType=VARCHAR},
+      platform = #{platform,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=BIT},
+      listen_time = #{listenTime,jdbcType=BIGINT},
+      status = #{status,jdbcType=BIT},
+      lastlogin = #{lastlogin,jdbcType=TIMESTAMP},
+      logintimes = #{logintimes,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      regist_ip = #{registIp,jdbcType=VARCHAR},
+      user_key = #{userKey,jdbcType=VARCHAR},
+      refresh_feeds_at = #{refreshFeedsAt,jdbcType=TIMESTAMP},
+      refresh_feeds_at_id = #{refreshFeedsAtId,jdbcType=BIGINT},
+      is_subscribe_category = #{isSubscribeCategory,jdbcType=TINYINT},
+      is_podcaster = #{isPodcaster,jdbcType=TINYINT},
+      is_v = #{isV,jdbcType=TINYINT},
+      description = #{description,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      user_token = #{userToken,jdbcType=VARCHAR},
+      user_state = #{userState,jdbcType=TINYINT},
+      reg_type = #{regType,jdbcType=VARCHAR},
+      token_exptime = #{tokenExptime,jdbcType=INTEGER},
+      message_email = #{messageEmail,jdbcType=VARCHAR},
+      image_path = #{imagePath,jdbcType=VARCHAR},
+      fans_count = #{fansCount,jdbcType=INTEGER},
+      real_fans_count = #{realFansCount,jdbcType=INTEGER},
+      app_type = #{appType,jdbcType=INTEGER},
+      is_robot = #{isRobot,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <sql id="paginationSql" >
+    <if test="page != null" >
+      limit  #{page.startIndex,jdbcType=INTEGER},#{page.endIndex,jdbcType=INTEGER}
+    </if>
+  </sql>
+</mapper>

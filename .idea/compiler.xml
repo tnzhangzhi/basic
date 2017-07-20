@@ -22,14 +22,23 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="basic_common" />
         <module name="basic_spring" />
         <module name="basic_springmvc" />
+        <module name="service-api" />
+        <module name="service-dao" />
+        <module name="service-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="basic" target="1.5" />
+      <module name="basic_common" target="1.5" />
       <module name="basic_spring" target="1.5" />
       <module name="basic_springmvc" target="1.5" />
+      <module name="service-api" target="1.5" />
+      <module name="service-dao" target="1.5" />
+      <module name="service-service" target="1.5" />
+      <module name="services" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

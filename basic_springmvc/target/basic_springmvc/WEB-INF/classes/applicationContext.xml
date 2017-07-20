@@ -19,4 +19,5 @@
 		</property>
 	</bean>
 	<import resource="classpath:rabbitmq.xml"/>
+	<import resource="classpath:comsumer.xml"/>
 </beans>
