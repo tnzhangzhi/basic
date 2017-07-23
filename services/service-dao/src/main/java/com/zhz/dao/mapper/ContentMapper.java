@@ -1,6 +1,7 @@
 package com.zhz.dao.mapper;
 
 
+import com.zhz.datasource.TableSharding;
 import com.zhz.domain.Content;
 import com.zhz.domain.ContentConditions;
 import org.apache.ibatis.annotations.Param;
@@ -8,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 //@DataSource("default")
+@TableSharding(table = "duotin_content",shardBy = "id",shardType = "shard_mod",tableNum = 2)
 public interface ContentMapper {
     int countByExample(ContentConditions example);
 

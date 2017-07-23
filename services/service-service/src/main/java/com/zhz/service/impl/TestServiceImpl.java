@@ -3,6 +3,7 @@ package com.zhz.service.impl;
 import com.zhz.dao.mapper.ContentMapper;
 import com.zhz.dao.mapper.UserMapper;
 import com.zhz.domain.Content;
+import com.zhz.domain.ContentConditions;
 import com.zhz.domain.User;
 import com.zhz.service.TestService;
 import org.slf4j.Logger;
@@ -26,8 +27,12 @@ public class TestServiceImpl implements TestService{
 
     public void test() {
         User user = userMapper.selectByPrimaryKey(100);
-        Content content = contentMapper.selectByPrimaryKey(248);
+//        Content content = contentMapper.selectByPrimaryKey(248);
+        ContentConditions conditions = new ContentConditions();
+        conditions.createCriteria().andIdEqualTo(248);
+        Content content = contentMapper.selectByExample(conditions).get(0);
         logger.info("user name is {}",user.getUsername());
         logger.info("conten name is {}",content.getFilename());
+        System.out.println("+++++++++++++++++++++++++++++++++");
     }
 }

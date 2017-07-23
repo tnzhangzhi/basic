@@ -110,7 +110,6 @@
         <if test="orderByClause != null">
             order by ${orderByClause}
         </if>
-        <include refid="paginationSql"/>
     </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -569,11 +568,6 @@
         is_down=#{isDown,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <sql id="paginationSql">
-        <if test="page != null">
-            limit #{page.startIndex,jdbcType=INTEGER},#{page.endIndex,jdbcType=INTEGER}
-        </if>
-    </sql>
 
     <select id="selectMaxDisplayOrder" resultType="java.lang.Integer">
         select max(display_order) from duotin_content
@@ -602,7 +596,6 @@
         <if test="orderByClause != null">
             order by ${orderByClause}
         </if>
-        <include refid="paginationSql"/>
     </select>
 
 
